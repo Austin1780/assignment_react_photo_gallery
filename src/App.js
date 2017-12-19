@@ -3,28 +3,26 @@ import octocat from "./Octocat.png";
 import "./App.css";
 import usersList from "./users";
 import Gallery from "./Gallery";
-import User from "./User";
+import InputFilter from "./InputFilter";
 
 class App extends Component {
   constructor() {
-    //to be able to use this
     super();
-
     this.state = {
-      login: "",
-      avatar_url: ""
+      users: usersList,
+      userNumber: usersList.length
     };
   }
 
-  onInputChange = e => {
-    this.setState({
-      login: "",
-      avatar_url: ""
-    });
+  onFilter = e => {
+    const value = e.target.value;
+    let filteredUsers = value
+      ? usersList.filter(u => u.login.match(new RegExp(value)))
+      : usersList;
+    this.setState({ users: filteredUsers, userNumber: filteredUsers.length });
   };
 
   render() {
-    //let users = ;
     return (
       <div className="App">
         <header className="App-header">
@@ -35,18 +33,15 @@ class App extends Component {
         <div className="usersDisplay container">
           <div className="row">
             <form>
-              <Input
-                type="text"
-                name="login"
-                value={name}
-                onInputChange={this.onInputChange}
+              <InputFilter
+                onFilter={this.onFilter}
+                userNumber={this.state.userNumber}
               />
-              <button type="submit">Submit</button>
             </form>
           </div>
         </div>
         <h4>Gallery of All Users:</h4>
-        <Gallery users={users} />
+        <Gallery users={this.state.users} />
       </div>
     );
   }
