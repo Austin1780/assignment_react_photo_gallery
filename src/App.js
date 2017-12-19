@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
+import octocat from "./Octocat.png";
 import "./App.css";
 import users from "./users";
 import Gallery from "./Gallery";
@@ -10,12 +10,12 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">React Photo Gallery</h1>
+          <img src={octocat} className="App-logo" alt="logo" />
+          <h1 className="App-title">React GitHub User Gallery</h1>
         </header>
-        <h2>Search for an individual user:</h2>
+        <h4>Search for an individual user:</h4>
         <User />
-        <h2>Gallery of All Users:</h2>
+        <h4>Gallery of All Users:</h4>
         <Gallery users={users} />
       </div>
     );
