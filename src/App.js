@@ -4,6 +4,8 @@ import "./App.css";
 import usersList from "./users";
 import Gallery from "./Gallery";
 import InputFilter from "./InputFilter";
+import ButtonAsc from "./ButtonAsc";
+import ButtonDesc from "./ButtonDesc";
 
 class App extends Component {
   constructor() {
@@ -11,15 +13,37 @@ class App extends Component {
     this.state = {
       users: usersList,
       userNumber: usersList.length
+      //order: "asc"
     };
   }
 
+  //text based search
   onFilter = e => {
     const value = e.target.value;
     let filteredUsers = value
       ? usersList.filter(u => u.login.match(new RegExp(value)))
       : usersList;
     this.setState({ users: filteredUsers, userNumber: filteredUsers.length });
+  };
+
+  onClickAsc = e => {
+    //sort users alphabetically
+    e.preventDefault();
+    console.log(e.target.value);
+    this.setState({
+      users: this.state.users.sort(function(a, b) {
+        return a.login > b.login ? 1 : -1;
+      })
+    });
+  };
+
+  onClickDesc = e => {
+    e.preventDefault();
+    this.setState({
+      users: this.state.users.sort(function(a, b) {
+        return b.login > a.login ? 1 : -1;
+      })
+    });
   };
 
   render() {
@@ -37,6 +61,8 @@ class App extends Component {
                 onFilter={this.onFilter}
                 userNumber={this.state.userNumber}
               />
+              <ButtonAsc onClickAsc={this.onClickAsc} />
+              <ButtonDesc onClickDesc={this.onClickDesc} />
             </form>
           </div>
         </div>
